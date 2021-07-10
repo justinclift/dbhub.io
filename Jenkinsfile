@@ -1,9 +1,15 @@
 pipeline {
     agent any 
     stages {
-        stage('Stage 1') {
+        stage('Build') {
             steps {
-                echo 'Hello world v2!' 
+                echo 'Building DBHub.io daemons'
+                sh 'cd docker && docker build --label dbhub .'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing daemons'
             }
         }
     }
