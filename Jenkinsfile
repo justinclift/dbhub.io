@@ -10,7 +10,7 @@ pipeline {
         stage('Start daemons') {
             steps {
                 echo 'Start daemons'
-                sh "BUILD_ID=${env.BUILD_ID} docker-compose -f tests/docker-compose.yml up -d"
+                sh "docker-compose -f tests/docker-compose.yml up -d"
             }
         }
         stage('Test daemons') {
@@ -22,7 +22,7 @@ pipeline {
         stage('Shut down daemons') {
             steps {
                 echo 'Shut down daemons'
-                sh "BUILD_ID=${env.BUILD_ID} docker-compose -f tests/docker-compose.yml down"
+                sh "docker-compose -f tests/docker-compose.yml down"
             }
         }
     }
