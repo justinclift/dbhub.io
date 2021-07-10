@@ -4,7 +4,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building DBHub.io daemons'
-                sh 'cd docker && docker build --label dbhub .'
+                sh 'docker build --label dbhub docker'
             }
         }
         stage('Test') {
