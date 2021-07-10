@@ -31,11 +31,8 @@ RUN echo "echo 127.0.0.1 docker-dev.dbhub.io docker-dev >> /etc/hosts" >> /usr/l
     echo "su - dbhub -c 'CONFIG_FILE=${CONFIG_FILE} /usr/local/bin/dbhub-api'" >> /usr/local/bin/start.sh && \
     chmod +x /usr/local/bin/start.sh
 
-# Ensure the source to be copied is in the right place
-COPY $WORKSPACE /go/src/github.com/sqlitebrowser/dbhub.io
-
-# DEBUGGING INFO
-RUN echo $WORKSPACE > /root/debug.txt
+# Include the source code to be compiled
+COPY . /go/src/github.com/sqlitebrowser/dbhub.io
 
 # Build the DBHub.io daemons
 RUN cd /go/src/github.com/sqlitebrowser/dbhub.io &&  \
