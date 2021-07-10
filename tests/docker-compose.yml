@@ -14,11 +14,29 @@ services:
   minio:
     image: "minio/minio"
     restart: always
+    expose:
+      - "9000"
     environment:
-    - MINIO_ACCESS_KEY=changeit
-    - MINIO_SECRET_KEY=changeit
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: minio123
+    command: server http://minio/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
   dbhub:
-    # Pass the build id image via env variable
     environment:
     - BUILD_ID=${BUILD_ID}
     image: "dbhubtest:${BUILD_ID}"
+    depends_on:
+      - postgres
+      - memcached
+      - minio
+
+# Potential reference material
+#   * https://raw.githubusercontent.com/minio/minio/master/docs/orchestration/docker-compose/docker-compose.yaml
+
+# Probably need to get rid of that Minio export port (9000),
+# as we don't want things outside the temporary compose
+# network to have access.
