@@ -1,0 +1,19 @@
+version: "3.7"
+
+services:
+  postgres:
+    image: "postgres:alpine"
+    restart: always
+    environment:
+    - POSTGRES_USER=dbhub
+    - POSTGRES_PASSWORD=changeit
+    - POSTGRES_DB=dbhub
+  memcached:
+    image: "memcached:alpine"
+    restart: always
+  minio:
+    image: "minio/minio"
+    restart: always
+    environment:
+    - MINIO_ACCESS_KEY=changeit
+    - MINIO_SECRET_KEY=changeit
